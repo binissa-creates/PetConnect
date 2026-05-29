@@ -17,8 +17,8 @@ router.post('/scan/:tagId', async (req, res) => {
   const [pets] = await db.query('SELECT id, name FROM pets WHERE tag_id = ?', [req.params.tagId]);
   if (pets.length > 0) {
     await db.query(
-      'INSERT INTO alerts (pet_id, type, title, message) VALUES (?, "scan", ?, ?)',
-      [pets[0].id, `${pets[0].name} Scanned!`, `Someone scanned the tag at coordinates ${lat}, ${lng}`]
+      'INSERT INTO alerts (pet_id, type, title, message, latitude, longitude) VALUES (?, "scan", ?, ?, ?, ?)',
+      [pets[0].id, `${pets[0].name} Scanned!`, `Someone scanned the tag at coordinates ${lat}, ${lng}`, lat, lng]
     );
   }
   res.json({ success: true });

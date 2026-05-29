@@ -2,79 +2,77 @@ import { Link } from 'react-router-dom'
 
 export default function RoleSelect() {
   return (
-    <div className="min-h-screen bg-surface flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-surface flex items-center justify-center px-4 py-12 selection:bg-primary-container selection:text-primary">
       <div className="w-full max-w-2xl">
         {/* Header */}
-        <div className="text-center mb-12">
-          <Link to="/" className="inline-flex items-center gap-2 text-2xl font-black text-primary mb-8">
-            <span className="material-symbols-outlined text-primary text-3xl">pets</span>
-            PetConnect
+        <div className="text-center mb-16">
+          <Link to="/" className="inline-flex items-center gap-2 text-2xl font-serif-elegant font-bold text-on-surface mb-10 group">
+            <span className="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform duration-300">pets</span>
+            <span className="text-gradient">PetConnect</span>
           </Link>
-          <h1 className="text-4xl font-extrabold text-on-surface mb-3">How are you joining us?</h1>
-          <p className="text-lg text-on-surface-variant">Choose your account type to get started</p>
+          <h1 className="text-4xl md:text-5xl font-serif-elegant font-bold text-on-surface mb-4 tracking-tight">How are you joining us?</h1>
+          <p className="text-lg text-on-surface-variant font-light">Choose your path to get started with our community.</p>
         </div>
 
         {/* Role Selection Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {/* Pet Owner Card */}
           <Link
             to="/login?role=owner"
-            className="bg-white rounded-lg shadow-xl p-8 border-2 border-surface-container hover:border-primary hover:shadow-2xl transition-all duration-300 group"
+            className="premium-card p-10 flex flex-col items-center text-center group"
           >
-            <div className="w-16 h-16 bg-primary-container rounded-default flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
-              <span className="material-symbols-outlined text-2xl text-primary group-hover:text-on-primary">favorite</span>
+            <div className="w-20 h-20 bg-primary-container rounded-2xl flex items-center justify-center mb-8 group-hover:bg-primary group-hover:text-on-primary transition-all duration-500 shadow-sm">
+              <span className="material-symbols-outlined text-3xl text-primary group-hover:text-on-primary group-hover:rotate-12 transition-all">favorite</span>
             </div>
-            <h2 className="text-2xl font-bold text-primary mb-3">Pet Owner</h2>
-            <p className="text-on-surface-variant mb-6">Register and manage your beloved pets. Keep their information safe and findable if they go missing.</p>
-            <div className="flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
-              <span>Sign In / Register</span>
-              <span className="material-symbols-outlined">arrow_forward</span>
+            <h2 className="text-2xl font-serif-elegant font-bold text-on-surface mb-4">Pet Owner</h2>
+            <p className="text-on-surface-variant font-light mb-8 leading-relaxed">Protect your beloved companions with digital profiles and smart alerts.</p>
+            <div className="flex items-center gap-2 text-primary font-semibold group-hover:gap-4 transition-all uppercase text-xs tracking-widest">
+              <span>Enter Portal</span>
+              <span className="material-symbols-outlined text-sm">arrow_forward</span>
             </div>
           </Link>
 
           {/* LGU Admin Card */}
           <Link
             to="/login?role=lgu"
-            className="bg-white rounded-lg shadow-xl p-8 border-2 border-surface-container hover:border-secondary hover:shadow-2xl transition-all duration-300 group"
+            className="premium-card p-10 flex flex-col items-center text-center group"
           >
-            <div className="w-16 h-16 bg-secondary-container rounded-default flex items-center justify-center mb-6 group-hover:bg-secondary transition-colors">
-              <span className="material-symbols-outlined text-2xl text-secondary group-hover:text-on-secondary">admin_panel_settings</span>
+            <div className="w-20 h-20 bg-secondary-container rounded-2xl flex items-center justify-center mb-8 group-hover:bg-secondary group-hover:text-on-secondary transition-all duration-500 shadow-sm">
+              <span className="material-symbols-outlined text-3xl text-secondary group-hover:text-on-secondary group-hover:-rotate-12 transition-all">admin_panel_settings</span>
             </div>
-            <h2 className="text-2xl font-bold text-secondary mb-3">LGU Admin</h2>
-            <p className="text-on-surface-variant mb-6">Manage lost pets in your jurisdiction. Help reunite lost animals with their owners through our platform.</p>
-            <div className="flex items-center gap-2 text-secondary font-bold group-hover:gap-3 transition-all">
-              <span>Sign In / Register</span>
-              <span className="material-symbols-outlined">arrow_forward</span>
+            <h2 className="text-2xl font-serif-elegant font-bold text-on-surface mb-4">LGU Admin</h2>
+            <p className="text-on-surface-variant font-light mb-8 leading-relaxed">Coordinate lost pet listings and manage neighborhood pet safety.</p>
+            <div className="flex items-center gap-2 text-secondary font-semibold group-hover:gap-4 transition-all uppercase text-xs tracking-widest">
+              <span>Admin Login</span>
+              <span className="material-symbols-outlined text-sm">arrow_forward</span>
             </div>
           </Link>
         </div>
 
         {/* Info Section */}
-        <div className="bg-surface-container-low rounded-lg p-6">
-          <h3 className="font-bold text-primary mb-3">What's the difference?</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-bold text-primary mb-2 flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm">check_circle</span>
-                Pet Owner Account
+        <div className="bg-surface-container-low/50 rounded-2xl p-8 border border-surface-container/50 backdrop-blur-sm">
+          <h3 className="font-serif-elegant font-bold text-primary mb-6 text-center">Platform Benefits</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <h4 className="font-bold text-on-surface text-sm flex items-center gap-2">
+                <span className="material-symbols-outlined text-tertiary text-base">verified</span>
+                For Pet Owners
               </h4>
-              <ul className="text-sm text-on-surface-variant space-y-1">
-                <li>✓ Register multiple pets</li>
-                <li>✓ Get instant notifications when scanned</li>
-                <li>✓ Manage health records</li>
-                <li>✓ Report lost/found pets</li>
+              <ul className="text-xs text-on-surface-variant space-y-2 font-light">
+                <li className="flex items-center gap-2"><span className="w-1 h-1 bg-primary/30 rounded-full"></span> Register multiple pets</li>
+                <li className="flex items-center gap-2"><span className="w-1 h-1 bg-primary/30 rounded-full"></span> Instant scan GPS notifications</li>
+                <li className="flex items-center gap-2"><span className="w-1 h-1 bg-primary/30 rounded-full"></span> Digital health records</li>
               </ul>
             </div>
-            <div>
-              <h4 className="font-bold text-secondary mb-2 flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm">check_circle</span>
-                LGU Admin Account
+            <div className="space-y-3">
+              <h4 className="font-bold text-on-surface text-sm flex items-center gap-2">
+                <span className="material-symbols-outlined text-tertiary text-base">verified</span>
+                For LGU Staff
               </h4>
-              <ul className="text-sm text-on-surface-variant space-y-1">
-                <li>✓ Manage lost pets in jurisdiction</li>
-                <li>✓ Access comprehensive pet database</li>
-                <li>✓ Coordinate rescue efforts</li>
-                <li>✓ Generate reports & analytics</li>
+              <ul className="text-xs text-on-surface-variant space-y-2 font-light">
+                <li className="flex items-center gap-2"><span className="w-1 h-1 bg-secondary/30 rounded-full"></span> Regional lost pet management</li>
+                <li className="flex items-center gap-2"><span className="w-1 h-1 bg-secondary/30 rounded-full"></span> Community-wide alerts</li>
+                <li className="flex items-center gap-2"><span className="w-1 h-1 bg-secondary/30 rounded-full"></span> Data-driven pet welfare</li>
               </ul>
             </div>
           </div>
@@ -83,3 +81,4 @@ export default function RoleSelect() {
     </div>
   )
 }
+

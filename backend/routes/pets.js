@@ -30,7 +30,7 @@ router.get('/:id', auth, async (req, res) => {
 
 router.post('/', auth, async (req, res) => {
   const { name, species, breed, age, weight, color, photo_url, medical_conditions, vaccines, address, hide_phone } = req.body;
-  const tag_id = `PTC-${Math.floor(1000 + Math.random() * 9000)}-${name.charAt(0).toUpperCase()}`;
+  const tag_id = `PTC-${Math.floor(1000 + Math.random() * 9000)}-${name?.charAt(0).toUpperCase() || 'P'}`;
   
   const [result] = await db.query(
     'INSERT INTO pets (owner_id, tag_id, name, species, breed, age, weight, color, photo_url, medical_conditions, vaccines, address, hide_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
