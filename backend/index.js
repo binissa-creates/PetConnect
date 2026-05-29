@@ -25,4 +25,8 @@ app.use('/api/lgu', lguRoutes)
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok', message: 'PetConnect Backend Running!' }))
 
-app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`))
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Server running on port ${PORT}`);
+  console.log(`🏠 Local: http://localhost:${PORT}`);
+  console.log(`🌐 Network: Check your PC's IP address (e.g., http://192.168.x.x:${PORT})`);
+});

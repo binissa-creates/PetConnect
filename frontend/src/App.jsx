@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import ScrollToTop from './components/ScrollToTop'
 import Landing from './pages/Landing'
 import RoleSelect from './pages/RoleSelect'
 import Login from './pages/Login'
@@ -17,6 +18,7 @@ import './index.css'
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/role-select" element={<RoleSelect />} />

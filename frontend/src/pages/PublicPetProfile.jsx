@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { getPublicTag } from '../services/api'
-import axios from 'axios'
+import API, { getPublicTag } from '../services/api'
 import MapComponent from '../components/MapComponent'
 
 export default function PublicPetProfile() {
@@ -46,7 +45,7 @@ export default function PublicPetProfile() {
     // Send scan location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
-        axios.post(`http://localhost:5000/api/public/scan/${tagId}`, {
+        API.post(`/public/scan/${tagId}`, {
           lat: pos.coords.latitude,
           lng: pos.coords.longitude,
         }).catch(() => { })
@@ -57,7 +56,7 @@ export default function PublicPetProfile() {
   const sendMessage = async e => {
     e.preventDefault()
     try {
-      await axios.post(`http://localhost:5000/api/public/message/${tagId}`, { message: msg })
+      await API.post(`/public/message/${tagId}`, { message: msg })
       setMsgSent(true)
     } catch (err) {
       // For demo purposes, we'll pretend it worked

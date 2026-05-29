@@ -129,7 +129,7 @@ export default function Register() {
                 <div className={`w-11 h-11 rounded-full flex items-center justify-center transition-all duration-500 shadow-sm ${step >= s.id ? 'bg-primary text-on-primary' : 'bg-white border border-surface-container text-on-surface-variant/40'}`}>
                   <span className={`material-symbols-outlined text-xl ${step >= s.id ? 'fill-1' : ''}`} style={{ fontVariationSettings: step >= s.id ? "'FILL' 1" : "" }}>{s.icon}</span>
                 </div>
-                <span className={`text-[9px] font-bold tracking-[0.15em] ${step >= s.id ? 'text-primary' : 'text-on-surface-variant/40'}`}>
+                <span className={`text-[9px] font-bold tracking-[0.15em] hidden sm:block ${step >= s.id ? 'text-primary' : 'text-on-surface-variant/40'}`}>
                   {s.label}
                 </span>
               </div>

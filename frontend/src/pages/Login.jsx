@@ -30,7 +30,11 @@ export default function Login() {
         navigate('/dashboard')
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.')
+      if (!err.response) {
+        setError(`Connection Refused. Please ensure the backend is running and your phone can reach ${window.location.hostname}:5000`);
+      } else {
+        setError(err.response?.data?.message || 'Login failed. Please try again.');
+      }
     } finally {
       setLoading(false)
     }

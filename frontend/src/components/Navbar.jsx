@@ -9,15 +9,12 @@ export default function Navbar() {
           <span className="tracking-tight text-gradient">PetConnect</span>
         </Link>
         <div className="flex items-center gap-3">
-          <Link to="/login?role=owner" className="hidden md:block px-5 py-2 rounded-default border border-primary/40 text-primary font-medium hover:bg-primary/5 hover:border-primary transition-all duration-200">
+          <Link to="/login?role=owner" className="hidden sm:block px-5 py-2 rounded-default border border-primary/40 text-primary font-medium hover:bg-primary/5 hover:border-primary transition-all duration-200">
             Sign In
           </Link>
-          <Link to="/role-select" className="hidden md:block px-6 py-2.5 rounded-default bg-primary text-on-primary font-medium hover:bg-primary-light shadow-sm hover:shadow active:scale-98 transition-all duration-200">
+          <Link to="/role-select" className="px-6 py-2.5 rounded-default bg-primary text-on-primary font-medium hover:bg-primary-light shadow-sm hover:shadow active:scale-98 transition-all duration-200">
             Get Started
           </Link>
-          <button className="md:hidden text-on-surface hover:text-primary transition-colors">
-            <span className="material-symbols-outlined">menu</span>
-          </button>
         </div>
       </div>
     </header>
