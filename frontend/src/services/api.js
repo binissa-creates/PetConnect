@@ -1,7 +1,12 @@
 import axios from 'axios'
 
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname.match(/\d+\.\d+\.\d+\.\d+/);
+const baseURL = isLocal 
+  ? `http://${window.location.hostname}:5000/api` 
+  : `https://${window.location.hostname}/api`; // Assumes backend is on the same domain in production
+
 const API = axios.create({
-  baseURL: `http://${window.location.hostname}:5000/api`,
+  baseURL,
   headers: { 'Content-Type': 'application/json' },
 })
 

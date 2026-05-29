@@ -32,29 +32,29 @@ export default function Settings() {
   return (
     <div className="bg-surface min-h-screen pb-40 selection:bg-primary-container selection:text-primary">
       {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-surface-container/30 soft-shadow">
-        <div className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto w-full">
-          <Link to="/" className="text-xl font-serif-elegant font-bold text-on-surface flex items-center gap-2 group transition-colors">
+      <header className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-surface-container/30 soft-shadow h-[72px] flex items-center">
+        <div className="flex justify-between items-center px-6 md:px-10 max-w-7xl mx-auto w-full">
+          <Link to="/" className="text-2xl font-serif-elegant font-bold text-on-surface flex items-center gap-2 group transition-colors">
             <span className="material-symbols-outlined text-primary group-hover:scale-110 transition-transform duration-300">pets</span>
             <span className="text-gradient">PetConnect</span>
           </Link>
           <button
             onClick={handleLogout}
-            className="w-10 h-10 rounded-full bg-primary-container border border-primary/20 text-primary font-bold text-sm shadow-sm hover:shadow transition-all"
+            className="w-9 h-9 rounded-full bg-primary-container border border-primary/20 text-primary font-bold text-sm shadow-sm hover:shadow transition-all"
           >
             {user.name?.charAt(0) || 'U'}
           </button>
         </div>
       </header>
 
-      <main className="pt-28 px-6 max-w-2xl mx-auto">
+      <main className="pt-[112px] px-6 md:px-10 max-w-2xl mx-auto">
         {/* Title */}
-        <section className="mb-12 relative">
+        <section className="mb-8 relative">
           <div className="absolute -top-10 -left-10 w-40 h-40 bg-primary-container/20 rounded-full blur-3xl -z-10"></div>
-          <h1 className="text-4xl md:text-5xl font-serif-elegant font-bold text-on-surface tracking-tight mb-2">
+          <h1 className="text-[28px] font-semibold text-on-surface tracking-tight leading-tight">
             Account <span className="text-gradient">Settings</span>
           </h1>
-          <p className="text-lg text-on-surface-variant font-light">Manage your personal information and preferences.</p>
+          <p className="text-sm text-on-surface-variant font-normal mt-2">Manage your personal information and preferences.</p>
         </section>
 
         {/* Settings Form */}
@@ -144,7 +144,7 @@ export default function Settings() {
       {/* FAB */}
       <Link
         to="/pet/new"
-        className="fixed right-8 bottom-32 w-16 h-16 bg-brown-gradient text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-40"
+        className="fixed right-6 bottom-[42px] w-[52px] h-[52px] bg-brown-gradient text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-60 group"
       >
         <span className="material-symbols-outlined text-3xl">add</span>
       </Link>

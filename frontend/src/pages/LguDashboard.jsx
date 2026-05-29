@@ -34,20 +34,18 @@ export default function LguDashboard() {
   const renderOverview = () => (
     <div className="space-y-10 pb-20 animate-in fade-in duration-700">
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-4 items-stretch">
         {mainStats.map(s => (
-          <div key={s.label} className="premium-card p-8 group hover:border-primary/20">
+          <div key={s.label} className="premium-card p-5 group hover:border-primary/20 min-h-[140px] flex flex-col justify-between">
             <div className="flex justify-between items-start">
-              <div className="space-y-6">
-                <div className={`w-12 h-12 ${s.color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}>
-                  <span className="material-symbols-outlined text-2xl">{s.icon}</span>
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em] mb-1">{s.label}</p>
-                  <p className="text-4xl font-serif-elegant font-bold text-on-surface">{s.value}</p>
-                </div>
+              <div className="w-11 h-11 rounded-full bg-primary-container text-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                <span className="material-symbols-outlined text-[20px]">{s.icon}</span>
               </div>
-              <span className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full ${s.color} shadow-sm`}>{s.trend}</span>
+              <span className={`text-[11px] font-semibold uppercase tracking-widest px-2 py-1 rounded-full ${s.color} shadow-sm`}>{s.trend}</span>
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold text-on-surface-variant uppercase tracking-[0.08em] mt-3">{s.label}</p>
+              <p className="text-[32px] font-bold text-on-surface leading-tight mt-1">{s.value}</p>
             </div>
           </div>
         ))}
@@ -265,39 +263,41 @@ export default function LguDashboard() {
   return (
     <div className="bg-surface min-h-screen pb-40 selection:bg-primary-container selection:text-primary">
       {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md flex justify-between items-center px-8 h-24 border-b border-surface-container/30">
-        <Link to="/" className="flex items-center gap-4 group">
-          <div className="w-12 h-12 bg-brown-gradient rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
-            <span className="material-symbols-outlined text-on-primary text-2xl">admin_panel_settings</span>
-          </div>
-          <div>
-            <h1 className="text-lg font-serif-elegant font-bold text-on-surface leading-none tracking-tight">Lahug Admin</h1>
-            <p className="text-[10px] text-on-surface-variant/60 font-bold uppercase tracking-[0.2em] mt-1">LGU Cebu City</p>
-          </div>
-        </Link>
-        <button 
-          onClick={() => { localStorage.clear(); navigate('/') }}
-          className="px-6 py-2.5 bg-surface border border-error/20 rounded-xl text-[10px] font-bold text-error hover:bg-error hover:text-white transition-all uppercase tracking-[0.2em] shadow-sm"
-        >
-          Logout
-        </button>
+      <header className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-surface-container/30 h-[72px] flex items-center">
+        <div className="flex justify-between items-center px-10 w-full max-w-7xl mx-auto">
+          <Link to="/" className="flex items-center gap-4 group">
+            <div className="w-11 h-11 bg-brown-gradient rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
+              <span className="material-symbols-outlined text-on-primary text-2xl">admin_panel_settings</span>
+            </div>
+            <div>
+              <h1 className="text-[18px] font-semibold text-on-surface leading-none tracking-tight">Lahug Admin</h1>
+              <p className="text-[10px] text-on-surface-variant/60 font-semibold uppercase tracking-[0.2em] mt-1">LGU Cebu City</p>
+            </div>
+          </Link>
+          <button 
+            onClick={() => { localStorage.clear(); navigate('/') }}
+            className="px-6 py-2 bg-surface border border-error/20 rounded-xl text-[11px] font-semibold text-error hover:bg-error hover:text-white transition-all uppercase tracking-[0.08em] shadow-sm"
+          >
+            Logout
+          </button>
+        </div>
       </header>
 
-      <main className="pt-32 px-6 max-w-4xl mx-auto">
+      <main className="pt-28 px-10 max-w-7xl mx-auto">
         {renderContent()}
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-xl border border-surface-container shadow-2xl px-4 py-2 rounded-[2.5rem] flex items-center gap-2 z-50">
+      <nav className="fixed bottom-0 left-0 w-full h-[68px] bg-white/90 backdrop-blur-xl border-t border-surface-container/50 flex justify-around items-center px-6 z-50">
         {navItems.map(item => (
           <button 
             key={item.label} 
             onClick={() => setActiveTab(item.label.toUpperCase())}
-            className={`flex items-center gap-3 transition-all px-6 py-4 rounded-full ${activeTab === item.label.toUpperCase() ? 'bg-primary text-on-primary shadow-lg shadow-primary/30' : 'text-on-surface-variant hover:text-primary hover:bg-primary/5'}`}
+            className={`flex items-center justify-center transition-all duration-300 ${activeTab === item.label.toUpperCase() ? 'bg-primary text-on-primary shadow-md px-5 h-11 rounded-full gap-2' : 'text-on-surface-variant hover:text-primary w-11 h-11 rounded-full'}`}
           >
-            <span className="material-symbols-outlined text-2xl">{item.icon}</span>
+            <span className="material-symbols-outlined text-[22px]">{item.icon}</span>
             {activeTab === item.label.toUpperCase() && (
-              <span className="text-[11px] font-bold uppercase tracking-widest animate-in fade-in slide-in-from-left-2">{item.label}</span>
+              <span className="text-[11px] font-semibold uppercase tracking-[0.08em] whitespace-nowrap">{item.label}</span>
             )}
           </button>
         ))}

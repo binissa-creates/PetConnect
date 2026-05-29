@@ -99,14 +99,14 @@ export default function EditPet() {
 
   return (
     <div className="min-h-screen bg-surface pb-40 selection:bg-primary-container selection:text-primary">
-      <header className="bg-surface/80 backdrop-blur-md sticky top-0 z-50 px-6 py-6 flex items-center gap-4 border-b border-surface-container/30 soft-shadow">
-        <button onClick={() => navigate(-1)} className="w-10 h-10 rounded-2xl bg-primary-container text-primary flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all shadow-sm">
-          <span className="material-symbols-outlined">arrow_back</span>
+      <header className="bg-surface/80 backdrop-blur-md fixed top-0 w-full z-50 px-6 h-[72px] flex items-center gap-4 border-b border-surface-container/30 soft-shadow">
+        <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl bg-primary-container text-primary flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all shadow-sm">
+          <span className="material-symbols-outlined text-[20px]">arrow_back</span>
         </button>
-        <h1 className="text-xl font-serif-elegant font-bold text-on-surface tracking-tight">{isNew ? 'New Pet Profile' : 'Edit Profile'}</h1>
+        <h1 className="text-[20px] font-semibold text-on-surface tracking-tight leading-none">{isNew ? 'New Pet Profile' : 'Edit Profile'}</h1>
       </header>
 
-      <form onSubmit={handleSubmit} className="max-w-xl mx-auto px-6 pt-12 space-y-10 animate-in fade-in slide-in-from-bottom-6 duration-700">
+      <form onSubmit={handleSubmit} className="max-w-xl mx-auto px-6 pt-[112px] space-y-10 animate-in fade-in slide-in-from-bottom-6 duration-700">
         {error && (
           <div className="p-4 bg-error/5 border border-error/20 rounded-2xl text-error text-[10px] font-bold uppercase tracking-widest text-center shadow-sm">{error}</div>
         )}

@@ -50,11 +50,11 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="bg-surface min-h-screen pb-32">
+    <div className="bg-surface min-h-screen pb-40 selection:bg-primary-container selection:text-primary">
       {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-surface-container/30 soft-shadow">
-        <div className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto w-full">
-          <div className="text-xl font-serif-elegant font-bold text-on-surface flex items-center gap-2 group transition-colors">
+      <header className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-surface-container/30 soft-shadow h-[72px] flex items-center">
+        <div className="flex justify-between items-center px-6 md:px-10 max-w-7xl mx-auto w-full">
+          <div className="text-2xl font-serif-elegant font-bold text-on-surface flex items-center gap-2 group transition-colors">
             <span className="material-symbols-outlined text-primary group-hover:scale-110 transition-transform duration-300">pets</span>
             <span className="text-gradient">PetConnect</span>
           </div>
@@ -65,57 +65,57 @@ export default function Dashboard() {
                 <span className="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
               )}
             </Link>
-            <button className="w-10 h-10 rounded-full bg-primary-container border border-primary/20 text-primary font-bold text-sm shadow-sm hover:shadow transition-all">
+            <button className="w-9 h-9 rounded-full bg-primary-container border border-primary/20 text-primary font-bold text-sm shadow-sm hover:shadow transition-all">
               {user.name?.charAt(0) || 'U'}
             </button>
           </div>
         </div>
       </header>
 
-      <main className="pt-28 px-6 max-w-7xl mx-auto space-y-16">
+      <main className="pt-[112px] px-6 md:px-10 max-w-7xl mx-auto space-y-10">
         {/* Welcome Section */}
         <section className="relative">
           <div className="absolute -top-10 -left-10 w-40 h-40 bg-primary-container/20 rounded-full blur-3xl -z-10"></div>
-          <h1 className="text-4xl md:text-5xl font-serif-elegant font-bold text-on-surface mb-2 tracking-tight">
+          <h1 className="text-[28px] font-semibold text-on-surface mb-2 tracking-tight leading-tight">
             Hello, <span className="text-gradient">{user.name?.split(' ')[0] || 'Friend'}</span>
           </h1>
-          <p className="text-lg text-on-surface-variant font-light">Your companions are safe and sound.</p>
+          <p className="text-sm text-on-surface-variant font-normal">Your companions are safe and sound.</p>
         </section>
 
         {/* My Pets Grid */}
         <section>
-          <div className="flex justify-between items-center mb-10">
-            <h2 className="text-2xl font-serif-elegant font-bold text-on-surface">My Pets</h2>
-            <Link to="/dashboard/pets" className="text-xs font-bold text-primary uppercase tracking-[0.2em] hover:underline">View All</Link>
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-[20px] font-semibold text-on-surface">My Pets</h2>
+            <Link to="/dashboard/pets" className="text-[11px] font-semibold text-primary uppercase tracking-[0.08em] hover:underline">View All</Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {pets.map(pet => (
-              <div key={pet.id} className="premium-card group">
-                <div className="h-64 relative overflow-hidden">
+              <div key={pet.id} className="premium-card group rounded-2xl overflow-hidden bg-white border border-surface-container/50">
+                <div className="h-56 relative overflow-hidden">
                   <img src={pet.photo_url} alt={pet.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <span className={`absolute top-4 right-4 text-[9px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full shadow-lg backdrop-blur-md ${statusStyle(pet.status)}`}>
+                  <span className={`absolute top-4 right-4 text-[11px] font-semibold uppercase tracking-[0.08em] px-2 py-1 rounded-full shadow-lg backdrop-blur-md ${statusStyle(pet.status)}`}>
                     {pet.status}
                   </span>
                 </div>
-                <div className="p-8">
-                  <div className="flex justify-between items-start mb-6">
+                <div className="p-5">
+                  <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h3 className="text-2xl font-serif-elegant font-bold text-on-surface group-hover:text-primary transition-colors">{pet.name}</h3>
-                      <p className="text-on-surface-variant text-sm font-light mt-1">{pet.breed} • {pet.age} {pet.age === 1 ? 'year' : 'years'}</p>
+                      <h3 className="text-xl font-semibold text-on-surface group-hover:text-primary transition-colors">{pet.name}</h3>
+                      <p className="text-on-surface-variant text-[13px] font-normal mt-1">{pet.breed} • {pet.age} {pet.age === 1 ? 'year' : 'years'}</p>
                     </div>
-                    <div className="w-12 h-12 bg-surface-container-low rounded-xl flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:bg-primary-container transition-all">
-                      <span className="material-symbols-outlined text-2xl">nfc</span>
+                    <div className="w-10 h-10 bg-surface-container-low rounded-xl flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:bg-primary-container transition-all">
+                      <span className="material-symbols-outlined text-xl">nfc</span>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between pt-6 border-t border-surface-container/50">
-                    <Link to={`/pet/${pet.id}/edit`} className="flex items-center gap-2 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest hover:text-primary transition-colors">
+                  <div className="flex items-center justify-between pt-4 border-t border-surface-container/50">
+                    <Link to={`/pet/${pet.id}/edit`} className="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant uppercase tracking-[0.08em] hover:text-primary transition-colors">
                       <span className="material-symbols-outlined text-lg">edit_note</span>
                       Edit Profile
                     </Link>
-                    <Link to={`/pet/${pet.id}`} className="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
-                      <span className="material-symbols-outlined text-xl">arrow_forward</span>
+                    <Link to={`/pet/${pet.id}`} className="w-9 h-9 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
+                      <span className="material-symbols-outlined text-lg">arrow_forward</span>
                     </Link>
                   </div>
                 </div>
@@ -125,23 +125,23 @@ export default function Dashboard() {
         </section>
 
         {/* Recent Alerts */}
-        <section className="bg-surface-container-low/30 rounded-[2.5rem] p-10 border border-surface-container/50 backdrop-blur-sm mb-12">
-          <div className="flex items-center gap-3 mb-8">
+        <section className="bg-surface-container-low/30 rounded-2xl p-6 border border-surface-container/50 backdrop-blur-sm mb-12">
+          <div className="flex items-center gap-3 mb-6">
             <span className="material-symbols-outlined text-primary">history</span>
-            <h2 className="text-xl font-serif-elegant font-bold text-on-surface">Recent Activity</h2>
+            <h2 className="text-[20px] font-semibold text-on-surface">Recent Activity</h2>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {alerts.map(alert => (
-              <div key={alert.id} className="bg-white/80 p-6 rounded-2xl flex items-start gap-5 shadow-sm border border-surface-container/30 hover:border-primary/20 transition-colors">
-                <div className={`mt-1 w-10 h-10 rounded-xl flex items-center justify-center ${alert.type === 'scan' ? 'bg-error/10 text-error' : 'bg-primary/10 text-primary'}`}>
+              <div key={alert.id} className="bg-white/80 p-5 rounded-xl flex items-start gap-4 shadow-sm border border-surface-container/30 hover:border-primary/20 transition-colors">
+                <div className={`mt-1 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${alert.type === 'scan' ? 'bg-error/10 text-error' : 'bg-primary/10 text-primary'}`}>
                   <span className="material-symbols-outlined text-xl">{alert.type === 'scan' ? 'location_on' : 'vaccines'}</span>
                 </div>
                 <div className="flex-1">
                   <div className="flex justify-between items-center mb-1">
-                    <h4 className="font-bold text-on-surface text-sm">{alert.title}</h4>
-                    <span className="text-[10px] font-bold text-on-surface-variant/40 uppercase tracking-widest">{new Date(alert.created_at).toLocaleDateString()}</span>
+                    <h4 className="font-semibold text-on-surface text-[15px]">{alert.title}</h4>
+                    <span className="text-[12px] font-normal text-on-surface-variant/40">{new Date(alert.created_at).toLocaleDateString()}</span>
                   </div>
-                  <p className="text-sm text-on-surface-variant font-light leading-relaxed">{alert.message}</p>
+                  <p className="text-[13px] text-on-surface-variant font-normal leading-relaxed">{alert.message}</p>
                 </div>
               </div>
             ))}
@@ -150,7 +150,7 @@ export default function Dashboard() {
       </main>
 
       {/* FAB */}
-      <Link to="/pet/new" className="fixed bottom-32 right-8 w-16 h-16 bg-brown-gradient text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 hover:rotate-90 active:scale-95 transition-all z-40 group">
+      <Link to="/pet/new" className="fixed bottom-[42px] right-6 w-[52px] h-[52px] bg-brown-gradient text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 hover:rotate-90 active:scale-95 transition-all z-60 group">
         <span className="material-symbols-outlined text-3xl">add</span>
       </Link>
 
