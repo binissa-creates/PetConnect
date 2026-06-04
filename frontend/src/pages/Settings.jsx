@@ -47,7 +47,7 @@ export default function Settings() {
 
   const handleLogout = () => {
     localStorage.clear()
-    navigate('/login')
+    navigate('/')
   }
 
   return (
