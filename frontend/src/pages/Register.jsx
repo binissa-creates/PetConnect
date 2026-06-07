@@ -110,7 +110,11 @@ export default function Register() {
       }
     } catch (err) {
       console.error('Registration/Pet creation error:', err)
-      setError(err.response?.data?.message || err.message || 'Registration failed.')
+      if (!err.response) {
+        setError(`Connection refused. Start the backend with "npm run dev" from the project root.`)
+      } else {
+        setError(err.response?.data?.message || err.message || 'Registration failed.')
+      }
     } finally {
       setLoading(false)
     }
@@ -185,10 +189,11 @@ export default function Register() {
                     <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em] ml-1">Password</label>
                     <div className="relative">
                       <input name="password" value={formData.password} onChange={handleChange} type={showPassword ? 'text' : 'password'} placeholder="••••••••" className="w-full bg-surface-container-low/50 border border-surface-container rounded-2xl p-5 text-base font-medium text-on-surface placeholder-on-surface-variant/30 focus:outline-none focus:ring-4 focus:ring-primary/5 transition-all" />
-                      <button onClick={() => setShowPassword(!showPassword)} className="absolute right-5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 hover:text-primary transition-colors">
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-5 top-1/2 -translate-y-1/2 text-on-surface-variant/50 hover:text-primary transition-colors">
                         <span className="material-symbols-outlined text-2xl">{showPassword ? 'visibility_off' : 'visibility'}</span>
                       </button>
                     </div>
+                    <p className="text-[10px] text-on-surface-variant font-light ml-1">At least 8 characters with one number</p>
                   </div>
 
                   {role === 'lgu' && (

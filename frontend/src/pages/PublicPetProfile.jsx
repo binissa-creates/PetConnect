@@ -14,32 +14,14 @@ export default function PublicPetProfile() {
 
   useEffect(() => {
     getPublicTag(tagId)
-      .then(r => setPet(r.data))
-      .catch(() => {
-        // Fallback mockup for demo
-        setPet({
-          tagId,
-          name: 'Buddy',
-          breed: 'Golden Retriever',
-          species: 'Dog',
-          age: 4,
-          gender: 'Male',
-          status: 'lost',
-          registered_at: 'Cebu City',
-          latitude: 10.3364, // Lahug, Cebu City
-          longitude: 123.8971,
-          medical_conditions: ['Nut Allergy', 'Microchipped (ID: 102****55)'],
-          vaccines: 'Up to date',
-          owner_name: 'Sarah Jenkins',
-          owner_phone: '+63 999 888 7777',
-          photo_url: 'https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=600',
-          references: [
-            'https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?auto=format&fit=crop&q=80&w=400',
-            'https://images.unsplash.com/photo-1633722715463-d30f4f325e24?auto=format&fit=crop&q=80&w=400',
-            'https://images.unsplash.com/photo-1598133894008-61f7fdb8cc3a?auto=format&fit=crop&q=80&w=400'
-          ]
-        })
+      .then(r => {
+        if (r.data.status === 'lost') {
+          navigate(`/found/${tagId}`, { replace: true })
+          return
+        }
+        setPet(r.data)
       })
+      .catch(() => setNotFound(true))
       .finally(() => setLoading(false))
 
     // Send scan location
@@ -70,7 +52,7 @@ export default function PublicPetProfile() {
     </div>
   )
 
-  if (notFound && !pet) return (
+  if (!pet) return (
     <div className="min-h-screen bg-surface flex flex-col items-center justify-center px-6 text-center">
       <div className="w-24 h-24 bg-surface-container rounded-full flex items-center justify-center text-on-surface-variant/20 mb-6">
         <span className="material-symbols-outlined text-5xl">qr_code_scanner</span>
@@ -91,47 +73,10 @@ export default function PublicPetProfile() {
 
       <main className="pt-28 pb-40 px-6 max-w-lg mx-auto w-full space-y-8">
         {/* Status Banner */}
-        {pet.status === 'lost' ? (
-          <div className="space-y-4 animate-in zoom-in duration-500">
-            <div className="bg-error rounded-2xl p-5 flex items-center justify-center gap-4 shadow-xl shadow-error/20">
-              <span className="material-symbols-outlined text-white text-2xl animate-pulse">warning</span>
-              <span className="font-bold text-white text-xs tracking-[0.2em] uppercase">This Pet is Reported Lost</span>
-            </div>
-            
-            <div className="bg-white rounded-3xl p-6 border-2 border-error/20 shadow-lg space-y-4">
-               <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-error/10 text-error flex items-center justify-center shrink-0">
-                     <span className="material-symbols-outlined text-xl">location_on</span>
-                  </div>
-                  <div>
-                     <p className="text-[10px] font-bold text-error uppercase tracking-widest mb-1">Last Seen At</p>
-                     <p className="text-sm font-bold text-on-surface">{pet.last_seen_location || 'Lahug, Cebu City'}</p>
-                  </div>
-               </div>
-
-               {pet.reward_amount && (
-                 <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                       <span className="material-symbols-outlined text-xl">payments</span>
-                    </div>
-                    <div>
-                       <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-1">Reward Offered</p>
-                       <p className="text-sm font-black text-on-surface">{pet.reward_amount}</p>
-                    </div>
-                 </div>
-               )}
-
-               <div className="p-4 bg-surface-container-low rounded-2xl border border-surface-container">
-                  <p className="text-[11px] text-on-surface-variant leading-relaxed italic">"{pet.lost_description || 'Please help me get back home. I am friendly but might be scared.'}"</p>
-               </div>
-            </div>
-          </div>
-        ) : (
-          <div className="bg-tertiary rounded-2xl p-5 flex items-center justify-center gap-4 shadow-xl shadow-tertiary/20 animate-in zoom-in duration-500">
-            <span className="material-symbols-outlined text-white text-2xl">verified</span>
-            <span className="font-bold text-white text-xs tracking-[0.2em] uppercase">Verified PetConnect Profile</span>
-          </div>
-        )}
+        <div className="bg-tertiary rounded-2xl p-5 flex items-center justify-center gap-4 shadow-xl shadow-tertiary/20 animate-in zoom-in duration-500">
+          <span className="material-symbols-outlined text-white text-2xl">verified</span>
+          <span className="font-bold text-white text-xs tracking-[0.2em] uppercase">Verified PetConnect Profile</span>
+        </div>
 
         {/* Profile Hero */}
         <div className="flex flex-col items-center text-center py-4">

@@ -239,9 +239,9 @@ export default function Landing() {
           <div>
             <h4 className="font-semibold text-sm uppercase tracking-wider text-secondary mb-6">Product</h4>
             <ul className="space-y-4 text-on-primary/70 text-sm font-light">
-              <li><a href="#" className="hover:text-secondary transition-colors">Smart Tags</a></li>
-              <li><a href="#" className="hover:text-secondary transition-colors">Mobile App</a></li>
-              <li><a href="#" className="hover:text-secondary transition-colors">Subscription Plans</a></li>
+              <li><Link to="/community/lost" className="hover:text-secondary transition-colors">Lost Pet Board</Link></li>
+              <li><Link to="/adoptions" className="hover:text-secondary transition-colors">Adoption Gallery</Link></li>
+              <li><Link to="/role-select" className="hover:text-secondary transition-colors">Register Your Pet</Link></li>
             </ul>
           </div>
           <div>
@@ -249,7 +249,7 @@ export default function Landing() {
             <ul className="space-y-4 text-on-primary/70 text-sm font-light">
               <li><a href="#" className="hover:text-secondary transition-colors">Help Center</a></li>
               <li><a href="#" className="hover:text-secondary transition-colors">Contact Us</a></li>
-              <li><Link to="/login" className="hover:text-secondary transition-colors">LGU Staff Portal</Link></li>
+              <li><Link to="/login?role=lgu" className="hover:text-secondary transition-colors">LGU Staff Portal</Link></li>
               <li><a href="#" className="hover:text-secondary transition-colors">Privacy Policy</a></li>
             </ul>
           </div>

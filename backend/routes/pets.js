@@ -7,7 +7,14 @@ const router = express.Router();
 // Get all pets for owner
 router.get('/', auth, async (req, res) => {
   try {
-    const [rows] = await db.query('SELECT * FROM pets WHERE owner_id = ? ORDER BY created_at DESC', [req.userId]);
+    const [rows] = await db.query(
+      `SELECT p.*, COALESCE(p.tag_id, nt.tag_uid) as tag_id
+       FROM pets p
+       LEFT JOIN nfc_tags nt ON nt.pet_id = p.id AND nt.status = 'active'
+       WHERE p.owner_id = ?
+       ORDER BY p.created_at DESC`,
+      [req.userId]
+    );
     res.json(rows);
   } catch (err) {
     console.error('Get Pets Error:', err);
@@ -18,7 +25,13 @@ router.get('/', auth, async (req, res) => {
 // Get pet details with vaccinations, medical records, and emergency contacts
 router.get('/:id', auth, async (req, res) => {
   try {
-    const [rows] = await db.query('SELECT * FROM pets WHERE id = ? AND owner_id = ?', [req.params.id, req.userId]);
+    const [rows] = await db.query(
+      `SELECT p.*, COALESCE(p.tag_id, nt.tag_uid) as tag_id
+       FROM pets p
+       LEFT JOIN nfc_tags nt ON nt.pet_id = p.id AND nt.status = 'active'
+       WHERE p.id = ? AND p.owner_id = ?`,
+      [req.params.id, req.userId]
+    );
     if (rows.length === 0) return res.status(404).json({ message: 'Pet not found' });
     
     const pet = rows[0];
@@ -52,8 +65,8 @@ router.post('/', auth, async (req, res) => {
     }
 
     const [result] = await db.query(
-      'INSERT INTO pets (owner_id, name, species, breed, sex, date_of_birth, weight, color, photo_url, microchip_id, address, hide_phone, hide_address, hide_medical, barangay) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [req.userId, name, species, breed, sex || 'Unknown', date_of_birth || null, weight || null, color || null, photo_url || null, microchip_id || null, address || null, hide_phone || 0, hide_address || 0, hide_medical || 0, barangay || null]
+      'INSERT INTO pets (owner_id, name, species, breed, sex, date_of_birth, weight, color, photo_url, microchip_id, address, hide_phone, hide_address, hide_medical, barangay, tag_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [req.userId, name, species, breed, sex || 'Unknown', date_of_birth || null, weight || null, color || null, photo_url || null, microchip_id || null, address || null, hide_phone || 0, hide_address || 0, hide_medical || 0, barangay || null, finalTagId]
     );
 
     const petId = result.insertId;
