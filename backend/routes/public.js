@@ -3,13 +3,19 @@ import db from '../db.js';
 
 const router = express.Router();
 
+const tagLookupSql = `
+  SELECT p.*, u.name as owner_name, u.phone as owner_phone, COALESCE(p.tag_id, nt.tag_uid) as tag_id
+  FROM pets p
+  JOIN users u ON p.owner_id = u.id
+  LEFT JOIN nfc_tags nt ON nt.pet_id = p.id AND nt.status = 'active'
+  WHERE p.tag_id = ? OR nt.tag_uid = ?
+`;
+
 // Get public pet profile (NFC/QR scan landing page)
 router.get('/tag/:tagId', async (req, res) => {
   try {
-    const [rows] = await db.query(
-      'SELECT p.*, u.name as owner_name, u.phone as owner_phone FROM pets p JOIN users u ON p.owner_id = u.id WHERE p.tag_id = ?',
-      [req.params.tagId]
-    );
+    const tagId = req.params.tagId;
+    const [rows] = await db.query(tagLookupSql, [tagId, tagId]);
     if (rows.length === 0) return res.status(404).json({ message: 'Tag not found' });
     
     const pet = rows[0];
@@ -33,6 +39,28 @@ router.get('/tag/:tagId', async (req, res) => {
     } else {
       pet.vaccinations = [];
     }
+
+    // Attach active lost report when pet is marked lost
+    if (pet.status === 'lost') {
+      const [lostReports] = await db.query(
+        `SELECT id, last_seen_location, last_seen_lat, last_seen_lng, reward_amount,
+                description, contact_instructions, created_at
+         FROM lost_pet_reports
+         WHERE pet_id = ? AND status = 'active'
+         ORDER BY created_at DESC LIMIT 1`,
+        [pet.id]
+      );
+      if (lostReports.length > 0) {
+        const report = lostReports[0];
+        pet.lost_report_id = report.id;
+        pet.last_seen_location = report.last_seen_location;
+        pet.last_seen_lat = report.last_seen_lat;
+        pet.last_seen_lng = report.last_seen_lng;
+        pet.reward_amount = report.reward_amount;
+        pet.lost_description = report.description;
+        pet.contact_instructions = report.contact_instructions;
+      }
+    }
     
     res.json(pet);
   } catch (err) {
@@ -45,7 +73,13 @@ router.get('/tag/:tagId', async (req, res) => {
 router.post('/scan/:tagId', async (req, res) => {
   try {
     const { lat, lng, scanType } = req.body;
-    const [pets] = await db.query('SELECT id, name, owner_id FROM pets WHERE tag_id = ?', [req.params.tagId]);
+    const tagId = req.params.tagId;
+    const [pets] = await db.query(
+      `SELECT p.id, p.name, p.owner_id FROM pets p
+       LEFT JOIN nfc_tags nt ON nt.pet_id = p.id AND nt.status = 'active'
+       WHERE p.tag_id = ? OR nt.tag_uid = ?`,
+      [tagId, tagId]
+    );
     
     if (pets.length > 0) {
       const pet = pets[0];
@@ -80,7 +114,13 @@ router.post('/scan/:tagId', async (req, res) => {
 router.post('/message/:tagId', async (req, res) => {
   try {
     const { message, contactInfo } = req.body;
-    const [pets] = await db.query('SELECT id, name, owner_id FROM pets WHERE tag_id = ?', [req.params.tagId]);
+    const tagId = req.params.tagId;
+    const [pets] = await db.query(
+      `SELECT p.id, p.name, p.owner_id FROM pets p
+       LEFT JOIN nfc_tags nt ON nt.pet_id = p.id AND nt.status = 'active'
+       WHERE p.tag_id = ? OR nt.tag_uid = ?`,
+      [tagId, tagId]
+    );
     
     if (pets.length > 0) {
       const pet = pets[0];

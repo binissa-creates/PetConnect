@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import db from './db.js'
 import authRoutes from './routes/auth.js'
 import petRoutes from './routes/pets.js'
 import alertRoutes from './routes/alerts.js'
@@ -17,9 +18,8 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 5000
 
-// CORS setup - restrict origin to local environments
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', '*'], // allow local vite dev and all for mobile/local network dev
+  origin: true,
   credentials: true
 }))
 
@@ -40,8 +40,21 @@ app.use('/api/transfers', transferRoutes)
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok', message: 'PetConnect Backend Running!' }))
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ Server running on port ${PORT}`);
-  console.log(`🏠 Local: http://localhost:${PORT}`);
-  console.log(`🌐 Network: Check your PC's IP address (e.g., http://192.168.x.x:${PORT})`);
-});
+async function start() {
+  try {
+    await db.query('SELECT 1');
+    console.log('✅ Database connected');
+  } catch (err) {
+    console.error('❌ Database connection failed:', err.message);
+    console.error('   Check XAMPP MySQL is running and petconnect database exists.');
+    process.exit(1);
+  }
+
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ Server running on port ${PORT}`);
+    console.log(`🏠 Local: http://localhost:${PORT}`);
+    console.log(`🌐 Network: Check your PC's IP address (e.g., http://192.168.x.x:${PORT})`);
+  });
+}
+
+start();

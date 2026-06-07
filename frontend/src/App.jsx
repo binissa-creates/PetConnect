@@ -12,6 +12,7 @@ import Settings from './pages/Settings'
 import PetProfile from './pages/PetProfile'
 import EditPet from './pages/EditPet'
 import PublicPetProfile from './pages/PublicPetProfile'
+import FoundPetPage from './pages/FoundPetPage'
 import LostPet from './pages/LostPet'
 import LguDashboard from './pages/LguDashboard'
 import CommunityLostPets from './pages/CommunityLostPets'
@@ -31,6 +32,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/tag/:tagId" element={<PublicPetProfile />} />
+        <Route path="/found/:tagId" element={<FoundPetPage />} />
         <Route path="/community/lost" element={<CommunityLostPets />} />
         <Route path="/sighting/:reportId" element={<ReportSighting />} />
         <Route path="/adoptions" element={<AdoptionGallery />} />

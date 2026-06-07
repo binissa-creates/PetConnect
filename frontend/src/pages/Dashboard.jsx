@@ -11,7 +11,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) return navigate('/login')
+    if (!localStorage.getItem('token')) return navigate('/role-select')
     const loggedInUser = JSON.parse(localStorage.getItem('user') || '{}')
     if (loggedInUser.role === 'lgu' || loggedInUser.role === 'admin') {
       return navigate('/lgu')

@@ -10,25 +10,16 @@ export default function MyPets() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) return navigate('/login')
+    if (!localStorage.getItem('token')) return navigate('/role-select')
     const loggedInUser = JSON.parse(localStorage.getItem('user') || '{}')
     if (loggedInUser.role === 'lgu' || loggedInUser.role === 'admin') {
       return navigate('/lgu')
     }
     getPets()
-      .then(res => {
-        setPets(res.data?.length ? res.data : [
-          { id: 1, name: 'Buddy', breed: 'Golden Retriever', age: 3, status: 'healthy', photo_url: 'https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=400' },
-          { id: 2, name: 'Milo', breed: 'Beagle', age: 2, status: 'lost', photo_url: 'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&q=80&w=400' },
-          { id: 3, name: 'Cleo', breed: 'Siamese Cat', age: 4, status: 'healthy', photo_url: 'https://images.unsplash.com/photo-1513245543132-31f507417b26?auto=format&fit=crop&q=80&w=400' }
-        ])
-      })
-      .catch(() => {
-        setPets([
-          { id: 1, name: 'Buddy', breed: 'Golden Retriever', age: 3, status: 'healthy', photo_url: 'https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=400' },
-          { id: 2, name: 'Milo', breed: 'Beagle', age: 2, status: 'lost', photo_url: 'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&q=80&w=400' },
-          { id: 3, name: 'Cleo', breed: 'Siamese Cat', age: 4, status: 'healthy', photo_url: 'https://images.unsplash.com/photo-1513245543132-31f507417b26?auto=format&fit=crop&q=80&w=400' }
-        ])
+      .then(res => setPets(res.data || []))
+      .catch((err) => {
+        console.error('Failed to load pets:', err)
+        setPets([])
       })
       .finally(() => setLoading(false))
   }, [])

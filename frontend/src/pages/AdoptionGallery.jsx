@@ -18,36 +18,8 @@ export default function AdoptionGallery() {
       setAdoptions(res.data)
     } catch (err) {
       console.error('Failed to fetch adoptions:', err)
-      setError('Could not retrieve adoption gallery.')
-      // Fallback mock adoptions for demo
-      setAdoptions([
-        {
-          id: 1,
-          pet_name: 'Max',
-          species: 'Dog',
-          breed: 'Askal / Mixed',
-          estimated_age: '6 months',
-          description: 'Very energetic and loves playing fetch. Looking for a loving home with a yard.',
-          barangay: 'Lahug',
-          photo_url: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1',
-          posted_by_name: 'Lahug Rescue',
-          posted_by_phone: '0917-123-4567',
-          posted_by_email: 'rescue@lahug.gov.ph'
-        },
-        {
-          id: 2,
-          pet_name: 'Milo',
-          species: 'Cat',
-          breed: 'Domestic Shorthair',
-          estimated_age: '1 year',
-          description: 'A quiet, gentle companion who loves lounging by the window.',
-          barangay: 'Mabolo',
-          photo_url: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba',
-          posted_by_name: 'Milo Care',
-          posted_by_phone: '0918-987-6543',
-          posted_by_email: 'mabolo@cebu.gov.ph'
-        }
-      ])
+      setError('Could not retrieve adoption gallery. Make sure the backend is running.')
+      setAdoptions([])
     } finally {
       setLoading(false)
     }

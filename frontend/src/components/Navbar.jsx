@@ -9,6 +9,12 @@ export default function Navbar() {
           <span className="tracking-tight text-gradient">PetConnect</span>
         </Link>
         <div className="flex items-center gap-3">
+          <Link to="/community/lost" className="hidden md:block px-4 py-2 text-on-surface-variant hover:text-primary font-medium transition-colors text-sm">
+            Lost Pets
+          </Link>
+          <Link to="/adoptions" className="hidden md:block px-4 py-2 text-on-surface-variant hover:text-primary font-medium transition-colors text-sm">
+            Adoptions
+          </Link>
           <Link to="/login?role=owner" className="hidden sm:block px-5 py-2 rounded-default border border-primary/40 text-primary font-medium hover:bg-primary/5 hover:border-primary transition-all duration-200 text-sm">
             Sign In
           </Link>
