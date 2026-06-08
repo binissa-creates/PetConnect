@@ -107,8 +107,8 @@ export default function Register() {
           setStep(3) // Move to Link Tag Step to show the generated tag
         } catch (petErr) {
           console.error('Pet creation error:', petErr)
-          // Account was created but pet failed - still show link tag step with error
-          setError('Account created but pet registration failed. You can add your pet from the dashboard.')
+          const backendError = petErr.response?.data?.error || petErr.response?.data?.message || petErr.message;
+          setError(`Account created but pet registration failed: ${backendError}. You can add your pet from the dashboard.`);
           setStep(3)
         }
       }
