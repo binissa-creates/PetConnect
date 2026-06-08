@@ -13,6 +13,63 @@ import {
   updateLguAdoption
 } from '../services/api'
 
+// --- Dummy data for LGU demo (used when API returns no records) ---
+const dummyStats = {
+  total_pets: 5,
+  lost_pets: 2,
+  total_owners: 3,
+  strays_open: 1,
+  reunited_total: 1,
+  scans_total: 10,
+  new_this_month: 2,
+  barangay_breakdown: [
+    { barangay: 'Lahug', count: 2 },
+    { barangay: 'Mandaue', count: 1 },
+  ],
+};
+const dummyAlerts = [
+  {
+    id: 1,
+    pet_name: 'Cooper',
+    address: 'IT Park, Cebu City',
+    owner_name: 'Sarah Miller',
+    reported_at: '2026-05-03',
+  },
+];
+const dummyStrays = [
+  {
+    id: 101,
+    species: 'Dog',
+    status: 'open',
+    location_description: 'Banilad, Cebu City',
+    description: 'Lost brown dog, friendly.',
+    reporter_name: 'Anonymous',
+  },
+];
+const dummyCampaigns = [
+  {
+    id: 201,
+    title: 'Free Rabies Vaccination',
+    vaccine_type: 'Rabies',
+    description: 'Community drive for stray dogs.',
+    campaign_date: '2026-05-15',
+    target_barangay: 'All',
+    location: 'Barangay Hall Gym',
+  },
+];
+const dummyAdoptions = [
+  {
+    id: 301,
+    pet_name: 'Max',
+    species: 'Dog',
+    breed: 'Labrador',
+    estimated_age: '3 years',
+    description: 'Gentle, good with kids.',
+    photo_url: '',
+    status: 'available',
+  },
+];
+
 export default function LguDashboard() {
   const navigate = useNavigate()
   const user = JSON.parse(localStorage.getItem('user') || '{}')

@@ -47,6 +47,8 @@ CREATE TABLE `alerts` (
 LOCK TABLES `alerts` WRITE;
 /*!40000 ALTER TABLE `alerts` DISABLE KEYS */;
 INSERT INTO `alerts` (id, pet_id, type, title, message, is_read, created_at) VALUES (1,1,'scan','Cooper Scanned!','Someone scanned Cooper\'s tag near IT Park, Cebu City.',0,'2026-05-03 08:00:19');
+INSERT INTO `alerts` (id, pet_id, type, title, message, is_read, created_at) VALUES (2,2,'scan','Luna Scanned!','Someone scanned Luna\'s tag near Mandaue City.',0,'2026-05-04 09:15:00');
+INSERT INTO `alerts` (id, pet_id, type, title, message, is_read, created_at) VALUES (3,4,'lost','Bruno Lost','Bruno was reported missing near Banilad.',0,'2026-05-05 10:20:00');
 /*!40000 ALTER TABLE `alerts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +94,7 @@ CREATE TABLE `pets` (
 
 LOCK TABLES `pets` WRITE;
 /*!40000 ALTER TABLE `pets` DISABLE KEYS */;
-INSERT INTO `pets` (id, owner_id, tag_id, name, species, breed, age, weight, color, photo_url, medical_conditions, vaccines, vaccine_due, status, last_seen_location, hide_phone, created_at) VALUES (1,1,'PTC-8829-X','Cooper','Dog','Golden Retriever',2,NULL,NULL,'https://images.unsplash.com/photo-1552053831-71594a27632d',NULL,NULL,0,'healthy',NULL,0,'2026-05-03 08:00:19'),(2,1,'PTC-1120-L','Luna','Dog','Domestic Shorthair',4,NULL,NULL,'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba',NULL,NULL,0,'healthy',NULL,0,'2026-05-03 08:00:19'),(3,10,'PTC-9622-B','Bruno','Dog','Beagle',NULL,NULL,NULL,NULL,NULL,NULL,0,'healthy',NULL,NULL,'2026-05-29 09:49:25');
+INSERT INTO `pets` (id, owner_id, tag_id, name, species, breed, age, weight, color, photo_url, medical_conditions, vaccines, vaccine_due, status, last_seen_location, hide_phone, created_at) VALUES (1,1,'PTC-8829-X','Cooper','Dog','Golden Retriever',2,NULL,NULL,'https://images.unsplash.com/photo-1552053831-71594a27632d',NULL,NULL,0,'healthy',NULL,0,'2026-05-03 08:00:19'),(2,1,'PTC-1120-L','Luna','Dog','Domestic Shorthair',4,NULL,NULL,'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba',NULL,NULL,0,'healthy',NULL,0,'2026-05-03 08:00:19'),(3,10,'PTC-9622-B','Bruno','Dog','Beagle',NULL,NULL,NULL,NULL,NULL,NULL,0,'healthy',NULL,NULL,'2026-05-29 09:49:25'),(4,1,'PTC-7777-Z','Max','Dog','Labrador',5,NULL,NULL,'https://images.unsplash.com/photo-1507146426996-ef05306b995a',NULL,NULL,0,'lost','Banilad, Cebu City',0,'2026-05-05 10:00:00');
 /*!40000 ALTER TABLE `pets` ENABLE KEYS */;
 UNLOCK TABLES;
 
