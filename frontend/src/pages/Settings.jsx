@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { updateProfile } from '../services/api'
 import BottomNav from '../components/BottomNav'
@@ -17,6 +17,7 @@ export default function Settings() {
   }
 
   const user = getUser()
+  
   const [formData, setFormData] = useState({
     name: user.name || '',
     email: user.email || '',
@@ -27,6 +28,14 @@ export default function Settings() {
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (!localStorage.getItem('token')) return navigate('/role-select')
+    const loggedInUser = JSON.parse(localStorage.getItem('user') || '{}')
+    if (loggedInUser.role === 'lgu' || loggedInUser.role === 'admin') {
+      return navigate('/lgu')
+    }
+  }, [navigate])
 
   const handleChange = e => {
     const { name, value, type, checked } = e.target
@@ -54,7 +63,7 @@ export default function Settings() {
 
   const handleLogout = () => {
     localStorage.clear()
-    navigate('/login')
+    navigate('/')
   }
 
   return (
