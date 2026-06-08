@@ -158,39 +158,61 @@ export default function PetProfile() {
         </div>
       )}
 
-      {/* Hero */}
-      <div className="relative h-[450px] bg-surface-container overflow-hidden">
-        {pet.photo_url
-          ? <img src={pet.photo_url} alt={pet.name} className="w-full h-full object-cover" />
-          : <div className="w-full h-full flex items-center justify-center bg-surface-container-low text-on-surface-variant/20"><span className="material-symbols-outlined text-[120px]">pets</span></div>
-        }
-        <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent" />
-        
-        {/* Top Actions */}
-        <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-20">
-          <button onClick={() => navigate(-1)} className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white border border-white/20 hover:bg-white/20 transition-all">
-            <span className="material-symbols-outlined">arrow_back</span>
-          </button>
-          <span className={`text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-2 rounded-full shadow-lg backdrop-blur-md ${pet.status === 'lost' ? 'bg-error text-on-error animate-pulse' : 'bg-tertiary-container text-on-tertiary-container'}`}>
-            {pet.status}
-          </span>
+      {/* Hero Section */}
+      <div className="relative">
+        <div className="h-[400px] md:h-[500px] w-full bg-surface-container overflow-hidden relative">
+          {pet.photo_url
+            ? <img src={pet.photo_url} alt={pet.name} className="w-full h-full object-cover" />
+            : <div className="w-full h-full flex items-center justify-center bg-surface-container-low text-on-surface-variant/20"><span className="material-symbols-outlined text-[120px]">pets</span></div>
+          }
+          <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
+          
+          {/* Header Controls */}
+          <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-50">
+            <button 
+              onClick={() => navigate(-1)} 
+              className="w-11 h-11 bg-on-surface/20 backdrop-blur-md rounded-xl flex items-center justify-center text-white border border-white/20 hover:bg-on-surface/40 transition-all active:scale-90"
+            >
+              <span className="material-symbols-outlined">arrow_back</span>
+            </button>
+            <div className={`px-4 py-2 rounded-full backdrop-blur-md border shadow-lg flex items-center gap-2 ${pet.status === 'lost' ? 'bg-error/90 border-error/20 text-white animate-pulse' : 'bg-tertiary-container/90 border-tertiary/20 text-on-tertiary-container'}`}>
+              <span className="material-symbols-outlined text-sm">{pet.status === 'lost' ? 'warning' : 'verified'}</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{pet.status}</span>
+            </div>
+          </div>
         </div>
 
-        {/* Floating Name Card */}
-        <div className="absolute bottom-0 left-0 w-full px-6 translate-y-1/2 z-20">
-          <div className="bg-white rounded-[2rem] p-8 shadow-2xl shadow-primary/5 border border-surface-container/50 flex justify-between items-end">
-             <div>
-                <h1 className="text-4xl md:text-5xl font-serif-elegant font-bold text-on-surface tracking-tight mb-2">{pet.name}</h1>
-                <p className="text-on-surface-variant text-lg font-light">{pet.breed} • {pet.age} yr</p>
-             </div>
-             <Link to={`/pet/${id}/edit`} className="w-14 h-14 bg-primary-container text-primary rounded-2xl flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all shadow-sm">
-                <span className="material-symbols-outlined text-2xl">edit_note</span>
-             </Link>
+        {/* Floating Profile Card */}
+        <div className="relative -mt-20 px-6 max-w-2xl mx-auto z-20">
+          <div className="bg-white rounded-[2.5rem] p-8 shadow-2xl shadow-primary/10 border border-surface-container/50">
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <h1 className="text-4xl md:text-5xl font-serif-elegant font-black text-on-surface tracking-tight mb-2 leading-tight">
+                  {pet.name}
+                </h1>
+                <div className="flex items-center gap-2 text-on-surface-variant font-medium">
+                  <span className="material-symbols-outlined text-primary text-lg">category</span>
+                  <span>{pet.breed} • {pet.age} year(s)</span>
+                </div>
+              </div>
+              <Link 
+                to={`/pet/${id}/edit`} 
+                className="w-12 h-12 bg-primary-container text-primary rounded-2xl flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all shadow-sm active:scale-90"
+              >
+                <span className="material-symbols-outlined">edit_square</span>
+              </Link>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              <span className="px-3 py-1.5 bg-surface-container rounded-lg text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">{pet.species}</span>
+              <span className="px-3 py-1.5 bg-surface-container rounded-lg text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">{pet.color}</span>
+              <span className="px-3 py-1.5 bg-surface-container rounded-lg text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">{pet.weight}kg</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <main className="px-6 max-w-2xl mx-auto mt-24 space-y-10">
+      <main className="px-6 max-w-2xl mx-auto mt-8 space-y-10">
         {/* Emergency Alert Button */}
         <button
           onClick={toggleLost}
@@ -327,7 +349,7 @@ export default function PetProfile() {
                 </div>
                 <div>
                   <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/40 mb-1">Phone Number</p>
-                  <p className="font-bold">{pet.owner_phone}</p>
+                  <p className="font-bold">{pet.owner_phone || 'Not provided'}</p>
                 </div>
               </div>
             )}
@@ -337,7 +359,7 @@ export default function PetProfile() {
               </div>
               <div>
                 <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/40 mb-1">Home Address</p>
-                <p className="font-bold">{pet.address}</p>
+                <p className="font-bold">{pet.address || 'Not provided'}</p>
               </div>
             </div>
           </div>

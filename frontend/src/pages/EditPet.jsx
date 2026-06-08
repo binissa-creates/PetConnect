@@ -13,7 +13,8 @@ export default function EditPet() {
   const [error, setError] = useState('')
   const [form, setForm] = useState({
     name: '', species: 'Dog', breed: '', age: '', weight: '',
-    color: '', medical_conditions: '', vaccines: '', hide_phone: false, address: '',
+    color: '', medical_conditions: '', vaccines: '', hide_phone: false, 
+    address: '', owner_phone: '',
   })
   
   const [petPhoto, setPetPhoto] = useState(null)
@@ -212,6 +213,36 @@ export default function EditPet() {
           <div className="space-y-2">
             <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em] ml-1">Color / Fur Markings</label>
             <input name="color" value={form.color || ''} onChange={handleChange} placeholder="Describe unique features" className="w-full bg-surface-container-low/50 border border-surface-container rounded-2xl p-5 text-base font-bold text-on-surface focus:outline-none focus:ring-4 focus:ring-primary/5 transition-all" />
+          </div>
+
+          <div className="space-y-6 pt-6 border-t border-surface-container/50">
+            <div className="flex items-center gap-3">
+              <span className="material-symbols-outlined text-primary">contact_support</span>
+              <h2 className="text-lg font-serif-elegant font-bold text-on-surface">Emergency Information</h2>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em] ml-1">Home Address</label>
+              <textarea 
+                name="address" 
+                value={form.address || ''} 
+                onChange={handleChange} 
+                placeholder="Where should finders bring your pet?" 
+                rows={2}
+                className="w-full bg-surface-container-low/50 border border-surface-container rounded-2xl p-5 text-sm font-medium text-on-surface focus:outline-none focus:ring-4 focus:ring-primary/5 transition-all resize-none" 
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em] ml-1">Emergency Contact Number</label>
+              <input 
+                name="owner_phone" 
+                value={form.owner_phone || ''} 
+                onChange={handleChange} 
+                placeholder="e.g. +63 912 345 6789" 
+                className="w-full bg-surface-container-low/50 border border-surface-container rounded-2xl p-5 text-base font-bold text-on-surface focus:outline-none focus:ring-4 focus:ring-primary/5 transition-all" 
+              />
+            </div>
           </div>
 
           {/* Identification Photos */}

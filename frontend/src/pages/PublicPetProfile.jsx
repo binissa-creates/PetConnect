@@ -82,14 +82,21 @@ export default function PublicPetProfile() {
 
   return (
     <div className="min-h-screen bg-surface flex flex-col font-sans antialiased selection:bg-primary-container selection:text-primary">
-      {/* Top Header */}
-      <header className="fixed top-0 w-full z-50 bg-on-surface/95 backdrop-blur-md flex justify-between items-center px-6 h-20 border-b border-white/5">
-        <span className="material-symbols-outlined text-primary">pets</span>
-        <h1 className="text-lg font-serif-elegant font-bold text-white tracking-widest uppercase">PetConnect</h1>
-        <div className="w-2 h-2 bg-secondary rounded-full animate-ping"></div>
+      {/* Fixed Header */}
+      <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-surface-container/30 h-[72px] flex items-center shadow-sm">
+        <div className="flex justify-between items-center px-6 max-w-7xl mx-auto w-full">
+          <div className="text-xl font-serif-elegant font-bold text-on-surface flex items-center gap-2">
+            <span className="material-symbols-outlined text-primary">pets</span>
+            <span className="text-gradient">PetConnect</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-secondary rounded-full animate-pulse"></div>
+            <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Public Safety Profile</span>
+          </div>
+        </div>
       </header>
 
-      <main className="pt-28 pb-40 px-6 max-w-lg mx-auto w-full space-y-8">
+      <main className="pt-[100px] pb-40 px-6 max-w-lg mx-auto w-full space-y-8">
         {/* Status Banner */}
         {pet.status === 'lost' ? (
           <div className="space-y-4 animate-in zoom-in duration-500">
@@ -146,11 +153,11 @@ export default function PublicPetProfile() {
                <span className="material-symbols-outlined">nfc</span>
             </div>
           </div>
-          <h2 className="text-5xl font-serif-elegant font-bold text-on-surface mb-2 tracking-tight">{pet.name}</h2>
+          <h2 className="text-5xl font-serif-elegant font-black text-on-surface mb-2 tracking-tight leading-tight">{pet.name}</h2>
           <p className="text-on-surface-variant text-lg font-light mb-6">{pet.breed} • {pet.age} Years Old</p>
           <div className="inline-flex items-center gap-2 px-6 py-2 bg-surface-container-low/50 rounded-full border border-surface-container/50">
             <span className="material-symbols-outlined text-secondary text-base">location_on</span>
-            <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Lahug, Cebu City</span>
+            <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">{pet.address || 'Lahug, Cebu City'}</span>
           </div>
         </div>
 

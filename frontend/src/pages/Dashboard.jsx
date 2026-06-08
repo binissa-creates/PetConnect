@@ -14,11 +14,7 @@ export default function Dashboard() {
     if (!localStorage.getItem('token')) return navigate('/login')
     Promise.all([getPets(), getAlerts()])
       .then(([pRes, aRes]) => {
-        const fetchedPets = pRes.data?.length ? pRes.data : [
-          { id: 1, name: 'Buddy', breed: 'Golden Retriever', age: 3, status: 'healthy', photo_url: 'https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=400', vaccines: JSON.stringify([{name: 'Rabies', next_due: new Date(Date.now() + 432000000).toISOString().split('T')[0]}]) },
-          { id: 2, name: 'Milo', breed: 'Beagle', age: 2, status: 'lost', photo_url: 'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&q=80&w=400' },
-          { id: 3, name: 'Cleo', breed: 'Siamese Cat', age: 4, status: 'healthy', photo_url: 'https://images.unsplash.com/photo-1513245543132-31f507417b26?auto=format&fit=crop&q=80&w=400' }
-        ];
+        const fetchedPets = Array.isArray(pRes.data) ? pRes.data : [];
         setPets(fetchedPets);
         
         // Generate proactive reminders for upcoming vaccines
@@ -45,10 +41,7 @@ export default function Dashboard() {
            } catch (e) {}
         });
 
-        const fetchedAlerts = aRes.data?.length ? aRes.data : [
-          { id: 1, title: 'Pet Scanned!', message: 'Milo was scanned near IT Park, Cebu City.', type: 'scan', created_at: new Date().toISOString(), is_read: false, latitude: 10.3291, longitude: 123.9061 },
-          { id: 2, title: 'Vaccine Reminder', message: 'Buddy is due for Rabies vaccination.', type: 'vaccine', created_at: new Date(Date.now() - 172800000).toISOString(), is_read: true }
-        ];
+        const fetchedAlerts = Array.isArray(aRes.data) ? aRes.data : [];
         setAlerts([...proactiveReminders, ...fetchedAlerts]);
       })
       .catch(() => {

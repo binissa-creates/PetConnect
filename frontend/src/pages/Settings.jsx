@@ -5,7 +5,18 @@ import BottomNav from '../components/BottomNav'
 
 export default function Settings() {
   const navigate = useNavigate()
-  const user = JSON.parse(localStorage.getItem('user') || '{}')
+  
+  const getUser = () => {
+    try {
+      const stored = localStorage.getItem('user')
+      return stored ? JSON.parse(stored) : {}
+    } catch (e) {
+      console.error('Failed to parse user from localStorage:', e)
+      return {}
+    }
+  }
+
+  const user = getUser()
   const [formData, setFormData] = useState({
     name: user.name || '',
     email: user.email || '',
@@ -14,24 +25,28 @@ export default function Settings() {
     sms_alerts: user.sms_alerts ?? false,
   })
   const [saved, setSaved] = useState(false)
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleChange = e => {
     const { name, value, type, checked } = e.target
     const val = type === 'checkbox' ? checked : value
     setFormData(prev => ({ ...prev, [name]: val }))
+    if (error) setError('')
   }
 
   const handleSave = async () => {
     setLoading(true)
+    setError('')
     try {
       await updateProfile(formData)
       const updatedUser = { ...user, ...formData }
       localStorage.setItem('user', JSON.stringify(updatedUser))
       setSaved(true)
-      setTimeout(() => setSaved(false), 2000)
+      setTimeout(() => setSaved(false), 3000)
     } catch (error) {
       console.error('Failed to update profile:', error)
+      setError(error.response?.data?.message || 'Failed to update profile. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -78,6 +93,13 @@ export default function Settings() {
             <div className="p-4 bg-tertiary-container/30 border border-tertiary/20 rounded-2xl text-tertiary text-xs font-bold uppercase tracking-widest flex items-center gap-3 animate-in zoom-in duration-300">
               <span className="material-symbols-outlined text-lg">verified</span>
               Profile updated successfully
+            </div>
+          )}
+
+          {error && (
+            <div className="p-4 bg-error/10 border border-error/20 rounded-2xl text-error text-xs font-bold uppercase tracking-widest flex items-center gap-3 animate-in shake duration-300">
+              <span className="material-symbols-outlined text-lg">error</span>
+              {error}
             </div>
           )}
 
@@ -133,9 +155,15 @@ export default function Settings() {
 
               <button
                 onClick={handleSave}
-                className="w-full py-4 bg-brown-gradient text-on-primary font-bold rounded-2xl shadow-lg hover:shadow-xl active:scale-95 transition-all mt-4"
+                disabled={loading}
+                className="w-full py-4 bg-brown-gradient text-on-primary font-bold rounded-2xl shadow-lg hover:shadow-xl active:scale-95 transition-all mt-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                Save Changes
+                {loading ? (
+                  <>
+                    <span className="material-symbols-outlined animate-spin">progress_activity</span>
+                    Saving...
+                  </>
+                ) : 'Save Changes'}
               </button>
             </div>
           </div>

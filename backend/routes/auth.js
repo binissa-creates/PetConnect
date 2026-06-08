@@ -9,14 +9,38 @@ const router = express.Router();
 router.put('/profile', auth, async (req, res) => {
   try {
     const { name, email, phone, email_alerts, sms_alerts } = req.body;
-    await db.query(
-      'UPDATE users SET name = ?, email = ?, phone = ?, email_alerts = ?, sms_alerts = ? WHERE id = ?',
-      [name, email, phone, email_alerts, sms_alerts, req.userId]
-    );
+    
+    // Convert booleans to numbers for MySQL tinyint
+    const emailAlertsVal = (email_alerts === true || email_alerts === 1 || email_alerts === '1') ? 1 : 0;
+    const smsAlertsVal = (sms_alerts === true || sms_alerts === 1 || sms_alerts === '1') ? 1 : 0;
+
+    try {
+      // Try full update first
+      await db.query(
+        'UPDATE users SET name = ?, email = ?, phone = ?, email_alerts = ?, sms_alerts = ? WHERE id = ?',
+        [name, email, phone, emailAlertsVal, smsAlertsVal, req.userId]
+      );
+    } catch (dbErr) {
+      // If columns don't exist, fall back to core columns
+      if (dbErr.code === 'ER_BAD_FIELD_ERROR' || dbErr.message.includes('Unknown column')) {
+        console.warn('Alert columns missing, falling back to core profile update');
+        const [result] = await db.query(
+          'UPDATE users SET name = ?, email = ?, phone = ? WHERE id = ?',
+          [name, email, phone, req.userId]
+        );
+        if (result.affectedRows === 0) return res.status(404).json({ message: 'User not found' });
+      } else {
+        throw dbErr; // Re-throw if it's another error (like duplicate email)
+      }
+    }
+
     res.json({ message: 'Profile updated successfully' });
   } catch (err) {
     console.error('Update Profile Error:', err);
-    res.status(500).json({ message: 'Failed to update profile' });
+    if (err.code === 'ER_DUP_ENTRY') {
+      return res.status(400).json({ message: 'Email already in use by another account' });
+    }
+    res.status(500).json({ message: err.message || 'Failed to update profile' });
   }
 });
 

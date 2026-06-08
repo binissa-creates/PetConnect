@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { register, createPet } from '../services/api'
 
 export default function Register() {
@@ -80,22 +80,23 @@ export default function Register() {
       localStorage.setItem('token', authRes.data.token)
       localStorage.setItem('user', JSON.stringify(authRes.data.user))
 
-      await createPet({
-        name: formData.petName,
-        species: formData.species,
-        breed: formData.breed,
-        tag_id: formData.tagId,
-        photo_url: formData.previewUrl
-      })
+      try {
+        await createPet({
+          name: formData.petName,
+          species: formData.species,
+          breed: formData.breed,
+          tag_id: formData.tagId,
+          photo_url: formData.previewUrl
+        })
+      } catch (petErr) {
+        console.warn('Pet creation error:', petErr)
+        // Continue to dashboard even if pet creation fails - pet can be created later
+      }
 
       navigate('/dashboard')
     } catch (err) {
       console.warn('API Error (Demo Mode Fallback):', err)
-      setTimeout(() => {
-        localStorage.setItem('token', 'demo-token')
-        localStorage.setItem('user', JSON.stringify({ name: formData.fullName, email: formData.email, role: 'owner' }))
-        navigate('/dashboard')
-      }, 1500)
+      setError('Registration failed. Please try again.')
     } finally {
       setLoading(false)
     }
